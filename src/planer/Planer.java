@@ -102,7 +102,7 @@ public class Planer {
                 System.exit(ERROR_ENCODING);
             }
 
-            for(State st : initialState) // elements on table in start position
+            for(State st : goalState) // elements on table in goal position
             {
                 if("ONTABLE".equals(st.name))
                 {
@@ -112,8 +112,8 @@ public class Planer {
 
             writer.println("Depth:" + Integer.toString(deep));
 
-            ArrayList<Operators> op = get_next_operators((ArrayList<State>) initialState, new ArrayList<State>()); // get next opperators for first node
-            States first = new States(null, 0, n, new ArrayList<State>(),initialState,  op);
+            ArrayList<Operators> op = get_next_operators((ArrayList<State>) goalState, new ArrayList<State>()); // get next opperators for first node
+            States first = new States(null, 0, n, new ArrayList<State>(),goalState,  op);
 
             ok = new ArrayList<>();
             to_check = new ArrayList<>();
@@ -444,7 +444,7 @@ public class Planer {
         boolean match = false;
         for(State cr : newList)
         {
-            for(State goal : goalState)
+            for(State goal : initialState)
             {
                 if(cr.eq(goal)){match = true;}
             }
@@ -755,7 +755,6 @@ public class Planer {
             {
                 if(!"\r".equals(tmparr1))
                 {
-
                     initialState.add(from_txt_to_state(tmparr1));
                 }
             }
@@ -880,12 +879,13 @@ public class Planer {
 
     public static void printFinalSolutionAndSteps()
     {
+        int tmpIndex = 1;
         writer.println();
         writer.println("\nSOLUTION: \n");
         for(int i = finalSolution.size()-1; i>=0; i--)
         {
             writer.println();
-            writer.println("STATE "+ i +"\n");
+            writer.println("STATE "+ tmpIndex +"\n");
             writer.println("Operator:");
             printOperator(finalSolution.get(i).operator);
 
@@ -902,9 +902,8 @@ public class Planer {
             {
                 printState(cur);
             }
-            writer.println("N:"+finalSolution.get(i).n);
-
-
+            
+            tmpIndex++;
         }
 
         printSolution(finalSolution.get(0));
