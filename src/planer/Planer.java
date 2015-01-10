@@ -78,6 +78,7 @@ public class Planer {
         {
 
             try {
+                System.out.println("Trying to open input config file:\n");
                 String text_info = read_from_file(args[0]);
                 get_info_from_text(text_info);
             } catch (Exception e) {
